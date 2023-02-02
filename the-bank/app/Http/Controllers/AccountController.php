@@ -51,6 +51,27 @@ class AccountController extends Controller
             );
     }
 
+    public function create(CreateAccountRequest $requestVal)
+    {
+        $user = $this->userRepository->findById(request('user_id'));
+
+        return response()
+            ->json(
+                [
+                    'success' => true,
+                    'data' => $this->accountRepository->create(
+                        [
+                            'user_id' => $user->id,
+                            'balance' => 0,
+                            'interest_rate' => InterestServices::calculateInterestRate($user->income),
+                            'interest_overflow' => 0
+                        ]
+                    )
+                ],
+                200
+            );
+    }
+
     public function makeDeposit(MakeDepositRequest $requestVal)
     {
         $account = $this->accountRepository->findById(request('account_id'));
@@ -79,25 +100,14 @@ class AccountController extends Controller
             );
     }
 
-    public function create(CreateAccountRequest $requestVal)
+    public function makeWithdrawal(MakeDepositRequest $requestVal)
     {
-        $user = $this->userRepository->findById(request('user_id'));
+        //validate request
+        //find account
+        //update account balance
+        //create transaction & return in response
 
-        return response()
-            ->json(
-                [
-                    'success' => true,
-                    'data' => $this->accountRepository->create(
-                        [
-                            'user_id' => $user->id,
-                            'balance' => 0,
-                            'interest_rate' => InterestServices::calculateInterestRate($user->income),
-                            'interest_overflow' => 0
-                        ]
-                    )
-                ],
-                200
-            );
+        $account = $this->accountRepository->findById(request('account_id'));
     }
 
     // public function createWithApi()

@@ -17,13 +17,13 @@ class UserAccountController extends Controller
 
     public function find(User $user)
     {
-        return response()
-            ->json(
-                [
-                    'success' => true,
-                    'data' => $this->accountRepository->findByUser($user)
-                ],
-                200
-            );
+            return response()
+                ->json(
+                    [
+                        'success' => true,
+                        'data' => $this->accountRepository->findByUser($user)
+                    ],
+                    200
+                );
     }
 }

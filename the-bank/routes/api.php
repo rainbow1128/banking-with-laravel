@@ -39,6 +39,7 @@ Route::post('accounts/create', [AccountController::class, 'create']);
 Route::patch('accounts/interest/{account}', [DepositInterestController::class, 'update']);
 
 Route::post('accounts/deposit', [AccountController::class, 'makeDeposit']);
+Route::post('accounts/withdraw', [AccountController::class, 'makeWithdrawal']);
 
 // Route::post('accounts/create/apitest', [AccountController::class, 'createWithApi']);
 
