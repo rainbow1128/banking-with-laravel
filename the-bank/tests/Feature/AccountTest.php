@@ -161,6 +161,71 @@ class AccountTest extends TestCase
     }
 
     /**
+     * Testing a successful deposit an amount into an account
+     *
+     * @return void
+     */
+    public function testSuccessWithdrawFromAccount()
+    {
+        $response = $this->post('api/accounts/withdraw', [
+            'account_id' => 1,
+            'amount' => 100
+        ]);
+
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'transaction' => [
+                    'account_id' => 1,
+                    'amount' => -100
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * Testing a unsuccessful deposit an amount into an account
+     *
+     * @return void
+     */
+    public function testAccountIdFailureWithdrawFromAccount()
+    {
+        $response = $this->post('api/accounts/withdraw', [
+            'account_id' => -1,
+            'amount' => 100
+        ]);
+
+        $response->assertJson([
+            'success' => false,
+            'message' => 'Validation errors',
+            'data' => [
+                'account_id' => ['The selected account id is invalid.']
+            ]
+        ]);
+    }
+
+    /**
+     * Testing a unsuccessful deposit an amount into an account
+     *
+     * @return void
+     */
+    public function testAmountFailureWithdrawFromAccount()
+    {
+        $response = $this->post('api/accounts/withdraw', [
+            'account_id' => 1,
+            'amount' => 0.999
+        ]);
+
+        $response->assertJson([
+            'success' => false,
+            'message' => 'Validation errors',
+            'data' => [
+                'amount' => ['The amount must be an integer.']
+            ]
+        ]);
+    }
+
+    /**
      * Testing a successful user creation with api mocking
      *
      * @return void
