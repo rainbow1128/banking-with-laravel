@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Repository\AccountRepositoryInterface;
+use App\Repository\TransactionRepositoryInterface;
 use Illuminate\Http\Request;
 
 class UserAccountController extends Controller
@@ -17,13 +18,13 @@ class UserAccountController extends Controller
 
     public function find(User $user)
     {
-            return response()
-                ->json(
-                    [
-                        'success' => true,
-                        'data' => $this->accountRepository->findByUser($user)
-                    ],
-                    200
-                );
+        return response()
+            ->json(
+                [
+                    'success' => true,
+                    'data' => $this->accountRepository->findByUser($user)
+                ],
+                200
+            );
     }
 }

@@ -161,7 +161,7 @@ class AccountTest extends TestCase
     }
 
     /**
-     * Testing a successful deposit an amount into an account
+     * Testing a successful withdrawal from an account
      *
      * @return void
      */
@@ -184,7 +184,7 @@ class AccountTest extends TestCase
     }
 
     /**
-     * Testing a unsuccessful deposit an amount into an account
+     * Testing a unsuccessful withdrawal from an account
      *
      * @return void
      */
@@ -205,7 +205,7 @@ class AccountTest extends TestCase
     }
 
     /**
-     * Testing a unsuccessful deposit an amount into an account
+     * Testing a unsuccessful withdrawal from an account
      *
      * @return void
      */
@@ -222,6 +222,36 @@ class AccountTest extends TestCase
             'data' => [
                 'amount' => ['The amount must be an integer.']
             ]
+        ]);
+    }
+
+    /**
+     * Testing a successful transfer between accounts
+     *
+     * @return void
+     */
+    public function testSuccessTransferFundsBetweenAccounts()
+    {
+        $response = $this->post('api/accounts/transfer', [
+            'account_id_to' => 1,
+            'account_id_from' => 2,
+            'amount' => 1
+        ]);
+
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'incomingTransaction' =>
+                    [
+                        'account_id' => 1,
+                        'amount' => 1,
+                    ],
+                'outgoingTransaction' =>
+                    [
+                        'account_id' => 2,
+                        'amount' => -1,
+                    ]
+                ]
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAccountRequest;
 use App\Http\Requests\MakeDepositRequest;
+use App\Http\Requests\TransferFundsRequest;
 use App\Models\Account;
 use App\Repository\AccountRepositoryInterface;
 use App\Repository\TransactionRepositoryInterface;
@@ -121,6 +122,49 @@ class AccountController extends Controller
                                 'account_id' => request('account_id'),
                                 'amount' => -request('amount'),
                                 'new_balance' => $account->balance,
+                            ]
+                        )
+                    ]
+                ]
+            );
+    }
+
+    public function transferFunds(TransferFundsRequest $requestVal)
+    {
+        $accountTo = $this->accountRepository->findById(request('account_id_to'));
+        $accountFrom = $this->accountRepository->findById(request('account_id_from'));
+
+        $this->accountRepository->update(
+            $accountTo->id,
+            [
+                'balance' => ($accountTo->balance + request('amount'))
+            ]
+        );
+
+        $this->accountRepository->update(
+            $accountFrom->id,
+            [
+                'balance' => ($accountFrom->balance - request('amount'))
+            ]
+        );
+
+        return response()
+            ->json(
+                [
+                    'success' => true,
+                    'data' => [
+                        'incomingTransaction' => $this->transactionRepository->create(
+                            [
+                                'account_id' => $accountTo->id,
+                                'amount' => request('amount'),
+                                'new_balance' => $accountTo->balance,
+                            ]
+                        ),
+                        'outgoingTransaction' => $this->transactionRepository->create(
+                            [
+                                'account_id' => $accountFrom->id,
+                                'amount' => -request('amount'),
+                                'new_balance' => $accountFrom->balance,
                             ]
                         )
                     ]
