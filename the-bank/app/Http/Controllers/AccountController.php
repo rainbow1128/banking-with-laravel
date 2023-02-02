@@ -100,24 +100,24 @@ class AccountController extends Controller
             );
     }
 
-    public function createWithApi()
-    {
-        $userIncome = Http::get('https://swapi.dev/api/people/1/')['height'];
+    // public function createWithApi()
+    // {
+    //     $userIncome = Http::get('https://swapi.dev/api/people/1/')['height'];
 
-        return response()
-            ->json(
-                [
-                    'success' => true,
-                    'data' => $this->accountRepository->create(
-                        [
-                            'user_id' => 1,
-                            'balance' => 0,
-                            'interest_rate' => InterestServices::calculateInterestRate($userIncome * 1000),
-                            'interest_overflow' => 0
-                        ]
-                    )
-                ],
-                200
-            );
-    }
+    //     return response()
+    //         ->json(
+    //             [
+    //                 'success' => true,
+    //                 'data' => $this->accountRepository->create(
+    //                     [
+    //                         'user_id' => 1,
+    //                         'balance' => 0,
+    //                         'interest_rate' => InterestServices::calculateInterestRate($userIncome * 1000),
+    //                         'interest_overflow' => 0
+    //                     ]
+    //                 )
+    //             ],
+    //             200
+    //         );
+    // }
 }

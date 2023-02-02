@@ -165,23 +165,23 @@ class AccountTest extends TestCase
      *
      * @return void
      */
-    public function testSuccessAccountCreationUsingApiFake()
-    {
-        Http::fake([
-            'https://swapi.dev/api/people/1/' => Http::response([
-                'height' => 1
-            ])
-        ]);
+    // public function testSuccessAccountCreationUsingApiFake()
+    // {
+    //     Http::fake([
+    //         'https://swapi.dev/api/people/1/' => Http::response([
+    //             'height' => 1
+    //         ])
+    //     ]);
 
-        $this->json('POST', 'api/accounts/create/apitest')
-            ->assertJson([
-                'success' => true,
-                'data' => [
-                    'user_id' => 1,
-                    'interest_rate' => 0.93,
-                    'balance' => 0,
-                    'interest_overflow' => 0
-                ]
-            ]);
-    }
+    //     $this->json('POST', 'api/accounts/create/apitest')
+    //         ->assertJson([
+    //             'success' => true,
+    //             'data' => [
+    //                 'user_id' => 1,
+    //                 'interest_rate' => 0.93,
+    //                 'balance' => 0,
+    //                 'interest_overflow' => 0
+    //             ]
+    //         ]);
+    // }
 }

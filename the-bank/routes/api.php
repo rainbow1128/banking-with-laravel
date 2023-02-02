@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{user}', [UserController::class, 'findOne']);
@@ -37,9 +37,9 @@ Route::patch('accounts/interest/{account}', [DepositInterestController::class, '
 
 Route::post('accounts/deposit', [AccountController::class, 'makeDeposit']);
 
-Route::post('accounts/create/apitest', [AccountController::class, 'createWithApi']);
+// Route::post('accounts/create/apitest', [AccountController::class, 'createWithApi']);
 
-Route::get('testing/api', [TestApiController::class, 'index']);
+// Route::get('testing/api', [TestApiController::class, 'index']);
 
 //List statement web route
 //build a simple FE that can call these BE routes w/ JS
