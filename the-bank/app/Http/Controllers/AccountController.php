@@ -102,12 +102,30 @@ class AccountController extends Controller
 
     public function makeWithdrawal(MakeDepositRequest $requestVal)
     {
-        //validate request
-        //find account
-        //update account balance
-        //create transaction & return in response
-
         $account = $this->accountRepository->findById(request('account_id'));
+
+        $this->accountRepository->update(
+            request('account_id'),
+            [
+                'balance' => $account->balance - request('amount')
+            ]
+        );
+
+        return response()
+            ->json(
+                [
+                    'success' => true,
+                    'data' => [
+                        'transaction' => $this->transactionRepository->create(
+                            [
+                                'account_id' => request('account_id'),
+                                'amount' => -request('amount'),
+                                'new_balance' => $account->balance,
+                            ]
+                        )
+                    ]
+                ]
+            );
     }
 
     // public function createWithApi()
