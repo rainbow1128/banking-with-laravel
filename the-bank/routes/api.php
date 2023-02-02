@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\DepositInterestController;
 use App\Http\Controllers\TestApiController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{user}', [UserController::class, 'findOne']);
 Route::post('users/create', [UserController::class, 'create']);
+
+Route::get('users/{user}/accounts', [UserAccountController::class, 'find']);
 
 Route::get('transactions', [TransactionController::class, 'index']);
 Route::get('transactions/{account}', [TransactionController::class, 'find']);
